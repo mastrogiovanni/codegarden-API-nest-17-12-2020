@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+
+  loadbalancer:
+    image: nginx
+    ports:
+      - 80:80
+    volumes:
+    - ./config/nginx.conf:/etc/nginx/nginx.conf
+
+  backend:
+    image: codegarden-stackdemo
+    container_name: codegarden-stackdemo
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+    - 3000:3000
+    depends_on:
+      - redis
+
+  redis:
+    image: redis
+    command: "redis-server --appendonly yes"
+    volumes:
+    - ./redis-data:/data
+
