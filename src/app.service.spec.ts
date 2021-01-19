@@ -16,4 +16,8 @@ describe('AppService', () => {
     expect(service).toBeDefined();
   });
 
+  it('Returns Hello World', () => {
+    expect(service.getHello()).toEqual("Hello World!")
+  })
+
 });

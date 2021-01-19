@@ -1,9 +1,14 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AppService } from './app.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { LoggingInterceptor } from './common/interceptor/logging.interceptor';
 
+// @ApiBearerAuth()
 @Controller('/')
-@ApiTags('Hello World')
+// @ApiTags('Hello World')
+// @UseGuards(JwtAuthGuard)
+// @UseInterceptors(LoggingInterceptor)
 export class AppController {
 
   constructor(

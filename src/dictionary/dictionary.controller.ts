@@ -1,4 +1,4 @@
-import { CACHE_MANAGER, Controller, Inject } from '@nestjs/common';
+import { CacheTTL, CACHE_MANAGER, Controller, Inject } from '@nestjs/common';
 import { Get, Put } from '@nestjs/common/decorators/http/request-mapping.decorator';
 import { Query } from '@nestjs/common/decorators/http/route-params.decorator';
 import { UseInterceptors } from '@nestjs/common/decorators/core/use-interceptors.decorator';
@@ -36,7 +36,7 @@ export class DictionaryController {
       }
     }  
   
-    @Put()
+    @Put("/")
     set(@Query() query: KeyValue): IResponse {
       try {
         this.dictionaryService.set(query.key, query.value)
@@ -49,6 +49,7 @@ export class DictionaryController {
     }  
   
     @Get("/slow")
+    @CacheTTL(500)
     @UseInterceptors(CacheInterceptor)
     async getSlow(@Query() query: Key) : Promise<IResponse> {
       try {
